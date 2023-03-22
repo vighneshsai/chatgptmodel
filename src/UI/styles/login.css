@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css?family=Inter');
+
+.loginBackground {
+    --tw-bg-opacity: 1;
+    background: rgba(52, 53, 65, var(--tw-bg-opacity));
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginBodyContent {
+    width: 24rem;
+    font-size: .875rem;
+    font-family: "inter";
+    --tw-text-opacity: 1;
+    color: rgba(255, 255, 255, var(--tw-text-opacity));
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chatGptIcon {
+    color: white;
+    margin-bottom: 1.25rem;
+}
+
+.welcomeText {
+    margin-bottom: 0.5rem;
+}
+
+.loginText {
+    margin-bottom: 1rem;
+}
+
+.buttonsDiv {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.loginButton {
+    --tw-bg-opacity: 1;
+    --tw-text-opacity: 1;
+    background-color: rgba(16, 163, 127, var(--tw-bg-opacity));
+    color: rgba(255, 255, 255, var(--tw-text-opacity));
+    align-items: center;
+    border-color: transparent;
+    border-radius: 0.25rem;
+    border-width: 1px;
+    display: inline-flex;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    padding: 0.5rem 0.75rem;
+    pointer-events: auto;
+}
+
+.loginPageBackground {
+
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.createAccountText {
+    font-weight: bold !important;
+    font-size: 32px !important;
+    line-height: 48px;
+}
+.WelcomeBackText {
+    font-weight: bold !important;
+    font-size: 32px !important;
+    line-height: 48px;
+    margin-bottom: 24px;
+}
+
+.signinBodyContent {
+    width: 325px;
+    font-size: .875rem;
+    font-family: "Inter";
+    color: black;
+    text-align: center;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bodyText {
+    margin-bottom: 24px;
+}
+
+.inputField {
+    width: 100%;
+    height: 50px;
+    padding: 16px;
+    box-sizing: border-box;
+    font-size: 18px;
+    border: 1px solid black;
+    border-radius: 3px;
+    margin-bottom: 24px;
+}
+.submitButton {
+    width: 100%;
+    height: 50px;
+    padding: 16px;
+    box-sizing: border-box;
+    font-size: 18px;
+    border-radius: 3px;
+    background-color: #10a37f;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    outline: none;
+    border: none;
+}
+.optionLoginText{
+    display:flex;
+    width:100%;
+    justify-content: center;
+}
+.accountText{
+    padding-right: 10px;
+}
+.loginAnchor{
+    color: #10a37f;
+    text-decoration: none;
+}

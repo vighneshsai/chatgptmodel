@@ -70,6 +70,7 @@ function HomePage() {
     const [fullText, setFullText] = useState(
         "hello may i help you with lot of technical information.we are here to support you"
     );
+
     let chatName = {
         name: ''
     }
@@ -113,22 +114,38 @@ function HomePage() {
 
     }
     useEffect(() => {
+        initialTypeChange()
+
+    }, [data.initialApiKey, chat.chatArr.length])
+
+    const initialTypeChange = () => {
+        !data.initialApiKey && setData({ ...data, ["typeCount"]: chat.chatArr.length - 1 })
+
+    }
+    useEffect(() => {
 
 
         api();
 
 
-    }, [typedata, text, apiArray, chatArray, chatHandleArray, previousData, chatHistory, editShow, quesChat, data.initialApiKey, typeText])
+    }, [typedata, text, apiArray, chatArray, chatHandleArray, previousData, chatHistory, editShow, quesChat, data.initialApiKey, typeText, chat.chatArr.length])
     const api = async () => {
         const result = await makeGetRequest(`/chat`);
         await dispatch({ type: "SET_INITIAL_ARRAY", payload: result });
-            (data.typeCount === 0) &&
-            (setData({
-                ...data, ["typeCount"]: 0, ["apiKeyText"]: chat?.chatArr[0]?.apiKey, ["modelText"]: chat?.chatArr[0]?.model,
-                ["chatName"]: chat?.chatArr[0]?.chatName, ["tempValue"]: chat?.chatArr[0]?.temperature, ["lengthValue"]: chat?.chatArr[0]?.maxLength, ["FrequencyValue"]: chat?.chatArr[0]?.frequencyPenality, ["presencePenality"]: chat?.chatArr[0]?.presensePenality,
-                ["bestOfValue"]: chat?.chatArr[0]?.bestOf, ["stopSequence"]: chat?.chatArr[0]?.stopSequence, ["probality"]: chat?.chatArr[0]?.showProbablity,
-                ["startType"]: chat?.chatArr[0]?.startType, ["restartType"]: chat?.chatArr[0]?.reStartType
-            }))
+        // (data.typeCount === 0 && chat.chatArr.length !== 0) &&
+        //     (setData({
+        //         ...data, ["typeCount"]: 0, ["apiKeyText"]: chat?.chatArr[0]?.apiKey, ["modelText"]: chat?.chatArr[0]?.model,
+        //         ["chatName"]: chat?.chatArr[0]?.chatName, ["tempValue"]: chat?.chatArr[0]?.temperature, ["lengthValue"]: chat?.chatArr[0]?.maxLength, ["FrequencyValue"]: chat?.chatArr[0]?.frequencyPenality, ["presencePenality"]: chat?.chatArr[0]?.presensePenality,
+        //         ["bestOfValue"]: chat?.chatArr[0]?.bestOf, ["stopSequence"]: chat?.chatArr[0]?.stopSequence, ["probality"]: chat?.chatArr[0]?.showProbablity,
+        //         ["startType"]: chat?.chatArr[0]?.startType, ["restartType"]: chat?.chatArr[0]?.reStartType
+        //     }))
+        // chat.chatArr.length === 0 &&
+        //     (setData({
+        //         ...data, ["typeCount"]: chat.chatArr.length, ["apiKeyText"]: "", ["modelText"]: "", ["chatName"]: "", ["modelList"]: [], ["tempValue"]: 0, ["lengthValue"]: 1, ["FrequencyValue"]: 0, ["presencePenality"]: 0,
+        //         ["bestOfValue"]: 0, ["stopSequence"]: "", ["probality"]: "Off",
+        //         ["startType"]: false, ["restartType"]: false
+        //     }))
+
 
     }
     const handleChange = (e) => {
@@ -137,10 +154,11 @@ function HomePage() {
     }
     const newChatFunction = () => {
 
+
         setChatid("")
 
         setData({
-            ...data, ["typeCount"]: chat.chatArr.length, ["apiKeyText"]: "", ["modelText"]: "", ["chatName"]: "", ["modelList"]: [], ["initialApiKey"]: true, ["tempValue"]: 0, ["lengthValue"]: 1, ["FrequencyValue"]: 0, ["presencePenality"]: 0,
+            ...data, ["apiKeyText"]: "", ["modelText"]: "", ["chatName"]: "", ["modelList"]: [], ["initialApiKey"]: true, ["tempValue"]: 0, ["lengthValue"]: 1, ["FrequencyValue"]: 0, ["presencePenality"]: 0,
             ["bestOfValue"]: 0, ["stopSequence"]: "", ["probality"]: "Off",
             ["startType"]: false, ["restartType"]: false
         })
@@ -152,9 +170,10 @@ function HomePage() {
 
 
     }
-    console.log(data, "data")
 
     const chatHistoryData = (item) => {
+
+
         setData({
             ...data, ["typeCount"]: item, ["apiKeyText"]: chat?.chatArr[item]?.apiKey, ["modelText"]: chat?.chatArr[item]?.model,
             ["chatName"]: chat?.chatArr[item]?.chatName, ["tempValue"]: chat?.chatArr[item]?.temperature, ["lengthValue"]: chat?.chatArr[item]?.maxLength, ["FrequencyValue"]: chat?.chatArr[item]?.frequencyPenality, ["presencePenality"]: chat?.chatArr[item]?.presensePenality,
@@ -165,16 +184,19 @@ function HomePage() {
 
     }
     const deleteFunction = async (item) => {
+
+
         await makeDeleteRequest(`/chat/${item._id}`)
-        setData({ ...data, ["apiKeyText"]: "", ["modelText"]: "", ["modelList"]: [] })
+        setData({
+            ...data, ["apiKeyText"]: "", ["modelText"]: "", ["modelList"]: [], ["typeCount"]:
+                (chat.chatArr.length > 1) ?
+                    (data.typeCount == 0) ? data.typeCount + 1 : data.typeCount - 1
+
+                    : data.typeCount
+        })
         setChatHistory([1]);
     }
-    useEffect(() => {
 
-        // setData({  ["apiKeyText"]: chat?.chatArr[0]?.apiKey, ["modelText"]: chat?.chatArr[0]?.model })
-
-
-    }, [])
 
     const quesSearch = (ques) => {
         setCommonQues([])
@@ -193,7 +215,7 @@ function HomePage() {
         setQuesModel(true)
 
     }
-
+    console.log(data.typeCount, chat?.chatArr.length)
 
 
     return (
@@ -218,7 +240,7 @@ function HomePage() {
                                     <div style={{ backgroundColor: i == data.typeCount ? "rgba(52, 53, 65, 1)" : "black" }} className='chatListDiv'>
 
                                         <ChatBubbleOutlineIcon className='chatIcon' />
-                                        <div onClick={() => { chatHistoryData(i) }} className='chatListText' style={{ width: i !== data.typeCount ? "70%" : "45%" }}>{item.chatName}
+                                        <div onClick={() => { return chatHistoryData(i) }} className='chatListText' style={{ width: i !== data.typeCount ? "70%" : "45%" }}>{item.chatName}
                                             <div className='shadow'></div>
                                         </div>
                                         {i === data.typeCount &&
@@ -242,10 +264,10 @@ function HomePage() {
                             </div>
                         }
 
-                        <div className='lightMode'>
+                        {/* <div className='lightMode'>
                             <SystemUpdateAltIcon />
                             <div className='textContent'>Updates and FAQ</div>
-                        </div>
+                        </div> */}
                         <div className='lightMode'>
                             <LogoutIcon />
                             <div className='textContent'>Log out</div>
@@ -268,7 +290,7 @@ function HomePage() {
                                                     <div className='textChatContainer' style={{ color: lightMode ? "#574b4b" : "white" }}>
                                                         <div className='ViText'>VI</div>
                                                         <div> {item.question}</div>
-                                                        <ControlPointIcon style={{ cursor: "pointer" }} onClick={() => { return quesSearch(item.question) }} />
+                                                        <div className='compareText' style={{ cursor: "pointer" }} onClick={() => { return quesSearch(item.question) }} >compare propmt</div>
                                                     </div>
                                                     <div className='textApiContainer' style={{ background: lightMode ? "rgba(247,247,248,1)" : "hsla(0, 0%, 100%, .05)", color: lightMode ? "#574b4b" : "white" }}>
                                                         <div className='chatApiContainer'>
@@ -293,16 +315,16 @@ function HomePage() {
                                     <div className='modelContainer'>
                                         <div className='modelWidth'>
                                             <div className='modelInnerContainer'>
-                                                <div className='modelText' style={{color:lightMode?"rgb(87, 75, 75)":"white"}}>Model name</div>
-                                                <div className='modelTextField' style={{ fontSize:"22px",lineHeight:"24px" }} >- {chat?.chatArr[data.typeCount].model}</div>
+                                                <div className='modelText' style={{ color: lightMode ? "rgb(87, 75, 75)" : "white" }}>Model name</div>
+                                                <div className='modelTextField' style={{ fontSize: "22px", lineHeight: "24px" }} >- {chat?.chatArr[data.typeCount].model}</div>
                                             </div>
                                             <div className='modelInnerContainer'>
-                                                <div className='modelText' style={{color:lightMode?"rgb(87, 75, 75)":"white"}}>Chat name</div>
-                                                <div className='modelTextField' style={{fontSize:"22px" }} >- {chat?.chatArr[data.typeCount].chatName}</div>
+                                                <div className='modelText' style={{ color: lightMode ? "rgb(87, 75, 75)" : "white" }}>Chat name</div>
+                                                <div className='modelTextField' style={{ fontSize: "22px" }} >- {chat?.chatArr[data.typeCount].chatName}</div>
                                             </div>
                                             <div className='modelInnerContainer'>
-                                                <div className='modelText' style={{color:lightMode?"rgb(87, 75, 75)":"white"}}>Api key</div>
-                                                <div className='modelTextField' style={{ fontSize:"22px",wordBreak:"break-word" }} >- {chat?.chatArr[data.typeCount].apiKey?.slice(0,10)}*****{chat?.chatArr[data.typeCount].apiKey?.slice(chat?.chatArr[data.typeCount].apiKey.length-6,chat?.chatArr[data.typeCount].apiKey.length)}</div>
+                                                <div className='modelText' style={{ color: lightMode ? "rgb(87, 75, 75)" : "white" }}>Api key</div>
+                                                <div className='modelTextField' style={{ fontSize: "22px", wordBreak: "break-word" }} >- {chat?.chatArr[data.typeCount].apiKey?.slice(0, 10)}*****{chat?.chatArr[data.typeCount].apiKey?.slice(chat?.chatArr[data.typeCount].apiKey.length - 6, chat?.chatArr[data.typeCount].apiKey.length)}</div>
                                             </div>
                                             {keyMustText &&
                                                 <div className='validationText'>Api key must be given</div>}
@@ -412,7 +434,6 @@ function HomePage() {
                                         "presence_penalty": data.presencePenality / 100,
                                         "stop": ["END"]
                                     }, data.apiKeyText);
-
                                     typeText !== "" && (
                                         (chat.chatArr.length === 0
                                             //  || chat?.chatArr?.length - 1 < data.typeCount
@@ -443,7 +464,7 @@ function HomePage() {
                                                         ],
                                                         "chatItems": [{
                                                             "question": typeText,
-                                                            "answer": result.choices[0].text,
+                                                            "answer": result?.choices[0].text,
                                                             "day": day,
                                                             "time": time,
                                                             "apiKey": data.apiKeyText,
@@ -451,7 +472,7 @@ function HomePage() {
                                                         }]
                                                     },]) :
                                             await makePostRequest(`/chat/${chat?.chatArr[data.typeCount]._id}`, {
-                                                "question": typeText, "answer": result.choices[0].text, "day": day,
+                                                "question": typeText, "answer": result?.choices[0].text, "day": day,
                                                 "time": time, "apiKey": data.apiKeyText,
                                                 "model": data.modelText
                                             }))
@@ -471,7 +492,7 @@ function HomePage() {
                 </div>
             </div>
             <QuestionDetails show={quesModel} handleClosed={editHandleClose} data={data} commonQues={commonQues} />
-            <ChatRenameBox show={editShow} handleClosed={editHandleClose} modelList={"editChat"} name={chatRename} setChatRename={setChatRename} chatId={chatId} modelText={modelText} setModelText={setModelText} apiKeyText={apiKeyText} setApiKeyText={setApiKeyText} data={data} setData={setData}  />
+            <ChatRenameBox show={editShow} handleClosed={editHandleClose} modelList={"editChat"} name={chatRename} setChatRename={setChatRename} chatId={chatId} modelText={modelText} setModelText={setModelText} apiKeyText={apiKeyText} setApiKeyText={setApiKeyText} data={data} setData={setData} />
             <ChatRenameBox show={data.initialApiKey} handleClosed={editHandleClose} modelList={"newChat"} setChatRename={setChatRename} apiKeyText={apiKeyText} modelText={modelText} chatId={chatId} setModelText={setModelText} setApiKeyText={setApiKeyText} typeCount={typeCount} setTypeCount={setTypeCount} data={data} setData={setData} />
 
         </>

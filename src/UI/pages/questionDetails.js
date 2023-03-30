@@ -14,7 +14,6 @@ import 'react-seekbar-component/dist/index.css'
 
 const ReadMore = ({ children }) => {
     const text = children;
-    console.log(text.toString().length);
     const [ReadMore, setReadMore] = useState(false)
     useEffect(() => {
         text.toString().length > 100 && (setReadMore(true))
@@ -34,7 +33,6 @@ const ReadMore = ({ children }) => {
     );
 };
 function QuestionDetails({ show, handleClosed, data, commonQues }) {
-    console.log(commonQues.flat(1));
     const combineArray = commonQues.flat(1);
     const handleChange = () => {
 

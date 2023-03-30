@@ -493,7 +493,7 @@
 
 .apichatcontainer {
     width: 75%;
-
+    word-break: break-all;
 }
 
 .apiText {
@@ -594,7 +594,7 @@
     height: 30px;
     margin-top: 20px;
     cursor: pointer;
-    background: blueviolet;
+    background: #c4b2d5;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -736,7 +736,14 @@
     display: flex;
     justify-content: center;
 }
-
+.compareText{
+    color: rgba(142, 142, 160,1);
+    border: 1px solid grey;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    padding: 5px;
+}
 .modelStepContent {
     width: 100%;
     color: #281e65;

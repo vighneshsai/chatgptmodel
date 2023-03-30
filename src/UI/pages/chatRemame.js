@@ -17,10 +17,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 function ChatRenameBox({ show, handleClosed, chatId, modelList, setModelList, typeCount, setTypeCount, data, setData }) {
     const handleChange = () => {
-        {
-            typeCount != undefined && setData({ ...data, ["typeCount"]: typeCount - 1 })
-            // setTypeCount(typeCount - 1)
-        }
+       
         setData({ ...data, ["apiKeyText"]: "", ["modelText"]: "", ["modelList"]: [] });
 
         // setApiKeyText("");
@@ -33,7 +30,8 @@ function ChatRenameBox({ show, handleClosed, chatId, modelList, setModelList, ty
     })
     const [next, setNext] = useState(0)
     const HandleButton = async () => {
-
+        console.log(data.typeCount)
+        setData({ ...data, ["typeCount"]: 1 })
         {
             chatId != "" &&
                 await makePatchRequest(`/chat/${chatId}`, {
@@ -82,7 +80,6 @@ function ChatRenameBox({ show, handleClosed, chatId, modelList, setModelList, ty
         setData({ ...data, ["modelList"]: [], ["modelText"]: "" });
         const result = await makeChatGetRequest('/models', apiKey);
         (chatId !== "" && chatId !== undefined) && await makePatchRequest(`/chats/${chatId}`, { "chatValues": result.data })
-        console.log(result);
 
         result.data && (setData({ ...data, ["modelList"]: result?.data, ["modelText"]: result?.data[0]?.id }));
 
@@ -231,21 +228,21 @@ function ChatRenameBox({ show, handleClosed, chatId, modelList, setModelList, ty
                     </ModalFooter>
                 </div>}
             {next === 3 &&
-                <div className='modelCenter' style={{height:modelList == "editChat"?"738px":"684px"}}>
+                <div className='modelCenter' style={{ height: modelList == "editChat" ? "738px" : "684px" }}>
                     <div className='modelHeadContent'>Chat Details</div>
                     {modelList !== "editChat" && <div className='modelStepContent'>Step-4/4</div>}
                     {modelList == "editChat" &&
-                        <div style={{marginTop:"20px"}}>
-                            <div style={{ display: "flex",paddingLeft:"5%",alignItems:"center" }}>
-                                <div style={{width:"13%",}}>Model Name </div>
-                                <div style={{fontSize:"18px"}}>-{data.modelText}</div>
+                        <div style={{ marginTop: "20px" }}>
+                            <div style={{ display: "flex", paddingLeft: "5%", alignItems: "center" }}>
+                                <div style={{ width: "13%", }}>Model Name </div>
+                                <div style={{ fontSize: "18px" }}>-{data.modelText}</div>
                             </div>
-                            <div style={{ display: "flex",paddingLeft:"5%",alignItems:"center"  }}>
-                                <div style={{width:"13%"}}>Api Key </div>
-                                <div style={{fontSize:"18px"}}>-{data.apiKeyText?.slice(0,10)}*****{data.apiKeyText?.slice(data.apiKeyText.length-6,data.apiKeyText.length)}</div>
-                            </div> <div style={{ display: "flex",paddingLeft:"5%",alignItems:"center" }}>
-                                <div style={{width:"13%"}}>Chat name  </div>
-                                <div style={{fontSize:"18px"}}>-{data.chatName}</div>
+                            <div style={{ display: "flex", paddingLeft: "5%", alignItems: "center" }}>
+                                <div style={{ width: "13%" }}>Api Key </div>
+                                <div style={{ fontSize: "18px" }}>-{data.apiKeyText?.slice(0, 10)}*****{data.apiKeyText?.slice(data.apiKeyText.length - 6, data.apiKeyText.length)}</div>
+                            </div> <div style={{ display: "flex", paddingLeft: "5%", alignItems: "center" }}>
+                                <div style={{ width: "13%" }}>Chat name  </div>
+                                <div style={{ fontSize: "18px" }}>-{data.chatName}</div>
 
                             </div>
 

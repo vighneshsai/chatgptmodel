@@ -4,7 +4,6 @@ var SeekBar = function SeekBar(props) {
     var _useState = useState(props.progress),
         value = _useState[0],
         setValue = _useState[1];
-  console.log(props.percent,props.progress,value)
     var handleNo = function handleNo(event) {
         props.getNumber({...props.data, [props.name]: parseInt (event.target.value) });
         setValue(event.target.value / props.percent);

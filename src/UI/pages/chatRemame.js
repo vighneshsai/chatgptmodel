@@ -17,7 +17,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 function ChatRenameBox({ show, handleClosed, chatId, modelList, setModelList, typeCount, setTypeCount, data, setData }) {
     const handleChange = () => {
-       
+
         setData({ ...data, ["apiKeyText"]: "", ["modelText"]: "", ["modelList"]: [] });
 
         // setApiKeyText("");
@@ -30,10 +30,10 @@ function ChatRenameBox({ show, handleClosed, chatId, modelList, setModelList, ty
     })
     const [next, setNext] = useState(0)
     const HandleButton = async () => {
-        console.log(data.typeCount)
+        console.log(data)
         setData({ ...data, ["typeCount"]: 1 })
-        {
-            chatId != "" &&
+        
+            chatId != "" ?
                 await makePatchRequest(`/chat/${chatId}`, {
                     "chatName": data.chatName, "model": data.modelText, "apiKey": data.apiKeyText,
 
@@ -47,8 +47,8 @@ function ChatRenameBox({ show, handleClosed, chatId, modelList, setModelList, ty
                     "startType": data.startType,
                     "reStartType": data.restartType,
                 })
-        }
-        await makePostRequest(`/chat`, [
+        :
+        await makePostRequest(`/chat`, 
 
             {
                 "chatName": data.chatName,
@@ -67,7 +67,7 @@ function ChatRenameBox({ show, handleClosed, chatId, modelList, setModelList, ty
                     { "chatValues": data.modelList }
                 ],
 
-            },])
+            },)
         setNext(0)
         // setApiKeyText("");
         // setModelText("")

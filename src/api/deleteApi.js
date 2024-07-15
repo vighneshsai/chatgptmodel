@@ -9,10 +9,12 @@ const makeDeleteRequest = async (
   
 ) => {
     try {
-
+        var accessToken = localStorage.getItem('accessToken')
         let response = await fetch(`${BACKEND_URL.url}${endPoint}`, {
             method: "DELETE",
-           
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
         })
 
 

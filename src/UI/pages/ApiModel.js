@@ -1,8 +1,6 @@
 import React from 'react'
 import { Modal, ModalBody } from "react-bootstrap"
 import { HeaderFlex, HeaderText, HeaderText1, ModalFooter, TipButton, TipButton1 } from '../styles/index.styled'
-import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
-import VerifiedIcon from '@mui/icons-material/Verified';
 import '../styles/home.css'
 
 function ApiKeyBox({ show, handleClosed }) {

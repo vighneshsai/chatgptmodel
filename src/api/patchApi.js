@@ -5,13 +5,13 @@ const makePatchRequest = async (
     contentType = 'application/json'
 ) => {
     try {
+        var accessToken = localStorage.getItem('accessToken')
         let response = await window.fetch(`${BACKEND_URL.url}${endPoint}`, {
             method: "PATCH",
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': contentType,
-                
-
+                'Authorization': `Bearer ${accessToken}`
             }
         })
 

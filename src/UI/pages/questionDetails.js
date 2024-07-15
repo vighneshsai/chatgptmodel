@@ -25,6 +25,7 @@ const ReadMore = ({ children }) => {
     };
     return (
         <div className="text">
+          
             {isReadMore ? text.toString().slice(0, 80) : text}
             {ReadMore && <span onClick={toggleReadMore} className="read-or-hide" style={{ color: "chocolate", cursor: "pointer" }}>
                 {isReadMore ? "...read more" : " show less"}
@@ -34,6 +35,7 @@ const ReadMore = ({ children }) => {
 };
 function QuestionDetails({ show, handleClosed, data, commonQues }) {
     const combineArray = commonQues.flat(1);
+
     const handleChange = () => {
 
         handleClosed()
@@ -46,7 +48,7 @@ function QuestionDetails({ show, handleClosed, data, commonQues }) {
                 <div style={{ borderBottom: "1px solid grey", marginRight: "35px", marginLeft: "35px" }}>
                     <div className='questionText' style={{ color: "rebeccapurple",marginBottom:"5px" }}>
 
-                        <ReadMore>{combineArray[0]?.question}</ReadMore>
+                        <ReadMore>{(combineArray[0]!==undefined ? combineArray[0].question:"hii")}</ReadMore>
                     </div>
                     <div style={{marginBottom:"20px"}}>-(prompt)</div>
                 </div>

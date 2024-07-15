@@ -5,14 +5,17 @@ const makePostRequest = async (
     contentType = 'application/json'
 ) => {
     try {
+        var accessToken = localStorage.getItem('accessToken')
+        var headers = {
+            'Content-Type': contentType,
+        }
+        if (!endPoint.includes("login") && !endPoint.includes("login")) {
+            headers.Authorization = `Bearer ${accessToken}`
+        }
         let response = await window.fetch(`${BACKEND_URL.url}${endPoint}`, {
             method: "POST",
             body: JSON.stringify(body),
-            headers: {
-                'Content-Type': contentType,
-                
-
-            }
+            headers: headers
         })
 
 

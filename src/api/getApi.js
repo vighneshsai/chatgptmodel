@@ -1,36 +1,42 @@
 import { BACKEND_URL } from "./backend"
+import RefreshApi from "./refresh"
 
-const NO_CONTENT = 204
 
-const getToken = () => 'JWT ' + window.localStorage.getItem('Authorization')
-
-const makeGetRequest = async (
-    endPoint,
-    contentType = 'application/json'
-) => {
-    try {
-
-        let response = await fetch(`${BACKEND_URL.url}${endPoint}`, {
-            method: "GET",
-            headers: {
-                'Content-Type': contentType,
+function MakeGetRequest ( endPoint,contentType = 'application/json')  {
+    
+    const FetchData = async() => {
+        try {
+            var accessToken = localStorage.getItem('accessToken')
+            let response = await fetch(`${BACKEND_URL.url}${endPoint}`, {
+                method: "GET",
+                
+                headers: {
+                    'Content-Type': contentType,
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            })
+            var accessToken = localStorage.getItem('accessToken')
+    
+    
+            if (response.status === 401 || response.status === 403) {
+                await RefreshApi('/token' )
+                return { response }
             }
-        })
-
-
-        if (response.status === 401 || response.status === 403) {
-            // throw new Error('unauthorized')
-        }
-        let result
-        if (response.status == 201 || response.status == 200) {
-            return result = response.json()
-        }
-    } catch (error) {
-        return {
-            error,
-            response: null
+            let result
+            if (response.status == 201 || response.status == 200) {
+                result = await response.json();
+                return {result, response}
+            }
+        } catch (error) {
+            console.log(error)
+            return {
+                error,
+                response: null
+            }
         }
     }
+    return FetchData()
+    
 }
 
-export default makeGetRequest
+export default MakeGetRequest

@@ -91,7 +91,6 @@
 }
 
 .bodyText {
-    margin-bottom: 24px;
 }
 
 .inputField {
@@ -102,10 +101,14 @@
     font-size: 18px;
     border: 1px solid black;
     border-radius: 3px;
-    margin-bottom: 24px;
+    margin-top: 24px;
+}
+.validationText{
+    color:red
 }
 .submitButton {
     width: 100%;
+    cursor: pointer;
     height: 50px;
     padding: 16px;
     box-sizing: border-box;
@@ -115,6 +118,7 @@
     color: #ffffff;
     display: flex;
     align-items: center;
+    margin-top: 24px;
     justify-content: center;
     margin-bottom: 24px;
     outline: none;

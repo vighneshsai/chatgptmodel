@@ -11,7 +11,7 @@ function LoginFirstPage() {
                 <div className='welcomeText'>Welcome to ChatGPT</div>
                 <div className='loginText'>Log in with your OpenAI account to continue</div>
                 <div className='buttonsDiv'>
-                    <button onClick={() => { navigate("/loginPage") }} className='loginButton'>
+                    <button onClick={() => { navigate("/login") }} className='loginButton'>
                         Log in</button>
                     <button onClick={() => { navigate("/signin") }} className='loginButton'>Sign in</button>
 
